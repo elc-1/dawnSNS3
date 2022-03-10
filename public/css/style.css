@@ -1,0 +1,194 @@
+@charset "utf-8";
+html{
+}
+body{
+}
+
+/* 共通パーツ */
+
+/* ユーザーイメージを全て丸くする */
+.userImg{
+  border-radius: 50%;
+  width: 40px;
+}
+
+
+
+/* header */
+header{
+  background:#3C4767;
+}
+
+h1{
+    display: inline-block;
+    margin-left: 50px;
+}
+
+#head{
+  /* まずはlogoとuserを横に並べる */
+  display: flex;
+  height: 80px;
+  align-items: center;
+}
+
+#userWrap{
+  margin-left: auto;
+}
+
+#user{
+  /* ここでcontainer123を横並びにする */
+  display: flex;
+  /* 右に寄せる */
+  justify-content: right;
+  /* 縦向きに寄せる */
+  align-items: center;
+  margin-right: 50px;
+}
+
+/* グローバルナビゲーション */
+
+/*ナビメニューのスタイルを指定*/
+.gnavi{
+  position: absolute;
+  z-index: 2; /*重ね順を変更*/
+  top: 80px; /*表示位置を指定*/
+  color: #000; /*文字色を黒にする*/
+  text-align: center; /*テキストを中央揃え*/
+  width: 20%; /*全幅表示*/
+  height: 30%;
+  transform: translateY(-140%); /*ナビを上に隠す*/
+  transition: all 0.6s; /*アニメーションの時間を指定*/
+}
+
+.gnavi ul{
+  position: absolute;
+  background: #ccc; /*背景をグレーにする*/
+  width: 100%;
+  height: 100%;
+  margin-left: 21%;
+  z-index: 1;
+}
+
+.gnavi{
+  display: none;
+}
+
+.gnavi ul li{
+  font-size: 1.8rem;
+  list-style-type: none;
+  width: 100%;
+  border: solid 1px #000000;
+}
+
+.gnavi ul li:last-child{
+  border-bottom: none; /*最後のメニュー項目のみ下線を消す*/
+}
+
+.gnavi ul li a{
+  display: block; /*クリックできる領域を広げる*/
+  color: #000;
+  padding: 20px 0;
+  text-decoration: none;
+}
+
+/*トグルボタンが押されたときに付与するクラス*/
+.gnavi.active{
+  transform: translateY(0%);
+}
+
+/* ハンバーガーメニュー */
+.menu-trigger {
+    width: 40px;
+    height: 42px;
+    cursor: pointer;
+    z-index: 3;
+    align-items: center;
+    margin-top: 25px;
+}
+
+.menu-trigger span {
+    display: block;
+    width: 15px;
+    margin-top: 5px;
+    border-bottom: solid 2px #fff;
+    border-radius: 4px;
+    transition: .35s ease-in-out;			/*変化の速度を指定*/
+}
+
+/* ここがデフォルトのspan設定 */
+.menu-trigger span:nth-child(1) {
+    transform: rotate(60deg)
+}
+.menu-trigger span:nth-child(2) {
+    margin-top: -2px;
+    margin-left: 7px;
+    transform: rotate(-60deg)
+}
+
+/* 変更後のspan設定 */
+.menu-trigger.active span:nth-child(1) {
+    transform: rotate(-60deg);
+}
+.menu-trigger.active span:nth-child(2){
+    margin-left: 7px;
+    transform: rotate(60deg);
+}
+
+
+/* main content */
+#row{
+    display: flex;
+    flex-flow: row wrap;
+}
+#container{
+    flex: 0 0 80%;
+}
+#side-bar{
+    flex: 0 0 19%;
+    border-left: 1px solid #6C6C6C;
+}
+
+.btn {
+  font-size: 15px;
+  background: #3C4767;
+  border-radius: 5%;
+  width: 120px;
+  padding: 5% 3%;
+  text-align: center;
+}
+
+.btn a{
+  color: #fff;
+}
+
+
+/* ここからモーダル */
+/* 背景 */
+.overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: rgba(178,178,178,0.2);
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+/* モーダルウィンドウ */
+.modal-window {
+  display:none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 300px;
+  height: 300px;
+  background-color: #fff;
+  border-radius: 5px;
+  padding: 2rem;
+  z-index: 2;
+}
+/* モーダル表示中は背景ページをスクロールさせない */
+.no_scroll {
+  overflow: hidden;
+}

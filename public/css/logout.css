@@ -1,0 +1,84 @@
+@chasert "utf-8";
+
+html{
+    height: 100%;
+    /* ログアウト状態の文字の色は全て白だった */
+    color: #FFF;
+}
+
+body{
+    background: -moz-linear-gradient(top, #3C4767 60%, #dd563b);
+    background: -webkit-linear-gradient(top, #3C4767 60%, #dd563b);
+    background: linear-gradient(to bottom, #3C4767 60%, #dd563b);
+}
+
+header{
+    text-align: center;
+    padding-top: auto;
+    font-size: 1.5em;
+    margin-bottom: 5%;
+}
+
+#container{
+    margin-top: 0%;
+    margin-left: auto;
+    margin-right: auto;
+    background-color:rgba(50,59,86,0.7);
+    width: 250px;
+    height: auto;
+}
+
+.wrap{
+    padding: 8% 12% 8% 12%;
+    font-size: 0.8em;
+}
+
+/* inputの縦位置調整用 */
+.wrap2{
+    padding: 15% 0 15% 0;
+}
+
+form .input{
+    margin: 3% auto 10% auto;
+    width: 100%;
+    height: 25px;
+    border-radius: 5px;
+    box-shadow: none;
+    border: solid 1px;
+}
+
+form p{
+    text-align: center;
+}
+
+form a{
+    color: #FFF;
+}
+
+form .btn{
+    width: 60%;
+    text-align: center;
+    margin-left: 43%;
+    background-color: #777aed;
+    border-radius: 5px;
+}
+
+.btn2{
+    color: #fff;
+    background-color: #777aed;
+    padding: 7px 10px;
+    border-radius: 5px;
+    text-decoration: none;
+    text-align: center;
+    margin-left: 20%;
+}
+
+.wrap3{
+    text-align: center;
+    margin-bottom: 15%;
+}
+
+/* バリデーションのフォント色 */
+h3{
+    color:red;
+}

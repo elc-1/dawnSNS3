@@ -2,22 +2,35 @@
 
 @section('content')
 
-<!-- ここからフォローリストの画像を表示 -->
+<div id="followImg">
+    <p class="listHeader">FollowList</p>
+    <div class="viewImg">
+        @forelse($img as $img)
+            <a href="/{{ $img->id }}/profile"><img src="images/{{ $img->images }}" alt="プロフィール画像" class="bicImg"></a>
+        @empty
+            <p>フォローしている人はいません。</p>
+        @endforelse
+    </div>
+</div>
+
+<hr class="separate">
+
+<div id="mutterBox">
     @forelse($list as $list)
-        <tr>
-            <td><img src="images/{{ $list->images }}" alt="プロフィール画像"></td>
-        </tr>
-
-<!-- ここからつぶやきの表示をする -->
-        <tr>
-            <td>{{ $list->id }}</td>
-            <td><img src="images/{{ $list->images }}" alt="プロフィール画像"></td>
-            <td>{{ $list->posts }}</td>
-            <td>{{ $list->create_at }}</td>
-        </tr>
-        <br>
+    <div class="wrapperBox">
+        <div class="wrapBox1">
+            <a href="/{{ $list->id }}/profile"><img src="images/{{ $list->images }}" alt="プロフィール画像" class="bicImg"></a>
+            <p>{{ $list->username }}</p>
+            <p class="deployRight">{{ $list->create_at }}</p>
+        </div>
+        <div class="wrapBox2">
+            <p>{{ $list->posts }}</p>
+        </div>
+    </div>
+    <hr class="border">
     @empty
-        <p>つぶやきはありません</p>
+        <p>つぶやきはありません。</p>
     @endforelse
+</div>
 
-    @endsection
+@endsection

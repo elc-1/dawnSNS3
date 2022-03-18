@@ -34,17 +34,25 @@ class FollowsController extends Controller
         $list = \DB::table('users')
                 ->join('follows','users.id','=','follows.follower_id')
                 ->join('posts','users.id','=','posts.user_id')
-                ->select('users.id','users.images','posts.create_at','posts.posts')
+                ->select('users.id','users.images','users.username','posts.create_at','posts.posts')
                 ->where('follows.follow_id',Auth::id())
                 ->orderBy('create_at','desc')
                 ->get();
                 // dd($list);
+
+        //画像のみ
+        $img = \DB::table('users')
+                ->join('follows','users.id','=','follows.follower_id')
+                ->select('users.id','users.images')
+                ->where('follows.follow_id',Auth::id())
+                ->get();
 
         return view('follows.followList',[
             'list'=>$list,
             'username'=>$username,
             'count_follow'=>$count_follow,
             'count_follower'=>$count_follower,
+            'img'=>$img,
         ]);
     }
 
@@ -72,17 +80,26 @@ class FollowsController extends Controller
         $list = \DB::table('users')
                 ->join('follows','users.id','=','follows.follow_id')
                 ->join('posts','users.id','=','posts.user_id')
-                ->select('users.id','users.images','posts.create_at','posts.posts')
+                ->select('users.id','users.images','users.username','posts.create_at','posts.posts')
                 ->where('follows.follower_id',Auth::id())
                 ->orderBy('create_at','desc')
                 ->get();
                 // dd($list);
 
-        return view('follows.followList',[
+        //画像とユーザーid
+        $img = \DB::table('users')
+                ->join('follows','users.id','=','follows.follow_id')
+                ->select('users.id','users.images')
+                ->where('follows.follower_id',Auth::id())
+                ->get();
+                // dd($img);
+
+        return view('follows.followerList',[
             'list'=>$list,
             'username'=>$username,
             'count_follow'=>$count_follow,
             'count_follower'=>$count_follower,
+            'img'=>$img,
         ]);
     }
 

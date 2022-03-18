@@ -28,21 +28,23 @@
             <h1 class="logo"><a href="/index"><img src="{{ asset('/images/main_logo.png') }}"></a></h1>
             <div id="userWrap">
                 <div id="user">
-                    <p class="container">{{ $username->username }}さん
-                        <nav class="gnavi">
-                            <ul>
-                                <li class="nav-item"><a href="/index">ホーム</a></li>
-                                <!-- auth認証のユーザーidがまだ入っていない -->
-                                <li class="nav-item"><a href="/viewProfile">プロフィール</a></li>
-                                <li class="nav-item"><a href="/logout">ログアウト</a></li>
-                            </ul>
-                        </nav>
-                        <div class="menu-trigger">
-                            <span></span>
-                            <span></span>
-                        </div>
-                        <img class="userImg" src="{{ asset('/images/dawn.png') }}">
-                    </p>
+                    <p class="username">{{ $username->username }}さん</p>
+
+                    <nav class="gnavi">
+                        <ul>
+                            <li><a href="/index">ホーム</a></li>
+                            <!-- auth認証のユーザーidがまだ入っていない -->
+                            <li><a href="/viewProfile">プロフィール</a></li>
+                            <li><a href="/logout">ログアウト</a></li>
+                        </ul>
+                    </nav>
+
+                    <div class="menu-trigger">
+                        <span></span>
+                        <span></span>
+                    </div>
+                    <!-- ここまだユーザーの画像呼び出してない -->
+                    <img class="userImg" src="{{ asset('/images/dawn.png') }}">
                 </div>
             </div>
         </div>
@@ -57,22 +59,26 @@
             @yield('content')
         </div >
         <div id="side-bar">
-            <div id="confirm">
+            <div class="bar-up">
                 <p>{{ $username->username }}さんの</p>
-                <div>
-                <p>フォロー数</p>
-                <!-- ここはControllerから配列で送ってきてないから、変数をそのままおけばいい -->
-                <p>{{ $count_follow }}名</p>
+                <div class="wrap-bar">
+                    <p>フォロー数</p>
+                    <p class="count">{{ $count_follow }}名</p>
+                    <br>
+                    <a href="/followList"><p class="list btn">フォローリスト</p></a>
+                    <br>
+                    <p>フォロワー数</p>
+                    <p class="count">{{ $count_follower }}名</p>
+                    <br>
+                    <a href="/followerList"><p class="list btn">フォロワーリスト</p></a>
                 </div>
-                <p class="btn"><a href="/followList">フォローリスト</a></p>
-                <div>
-                <p>フォロワー数</p>
-                <!-- ここも配列ではなくただの変数 -->
-                <p>{{ $count_follower }}名</p>
-                </div>
-                <p class="btn"><a href="/followerList">フォロワーリスト</a></p>
             </div>
-            <p class="btn"><a href="/search">ユーザー検索</a></p>
+
+            <hr>
+
+            <div class="bar-down">
+                <a href="/search"><p class="search btn">ユーザー検索</p></a>
+            </div>
         </div>
     </div>
     <footer>

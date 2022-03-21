@@ -62,11 +62,6 @@ class PostsController extends Controller
         //②user_idの取得：user_id
         $user_id = Auth::id();
 
-        // //③既存ツイートの表示：user_id,posts,create_at,modified_at
-        // $all_tweet = \DB::table('posts')->orderBy('create_at','desc')->get();
-        // //④自分orフォローしている人のツイートだけを抽出する
-        // $list = $all_tweet->whereIn('user_id',[$user_id,]);
-
         //データの取得,自分かフォローしている人だけ
         $list = \DB::table('posts')
                 ->join('users','posts.user_id','=','users.id')
@@ -80,9 +75,6 @@ class PostsController extends Controller
 
                 // dd($list);
 
-        //⑤編集モーダルへの読み込み用
-        // $post = \DB::table('posts')->where('id', $id)->first();
-
         //⑥フォローしている人のidの取得、カウント：int
         $follow = \DB::table('follows')
         ->where('follow_id',$user_id)
@@ -95,6 +87,15 @@ class PostsController extends Controller
         ->get(['follow_id']);
         $count_follower = count($follower);
 
+        //ツイートフォームへの表示用画像の取得
+        //コレクションで取得
+        $my_img = \DB::table('users')
+                  ->select('images')
+                  ->where('id',Auth::id())
+                  ->first();
+
+                //   dd($my_img);
+
         //データベースから呼び出した内容を送る
         return view('posts.index',[
             'list'=>$list,
@@ -103,6 +104,7 @@ class PostsController extends Controller
             // 'post'=>$post,
             'count_follow'=>$count_follow,
             'count_follower'=>$count_follower,
+            'my_img'=>$my_img,
         ]);
     }
 

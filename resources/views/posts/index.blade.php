@@ -9,16 +9,16 @@
 <body>
     <!-- つぶやきフォーム -->
     <div id="formTweet">
+        <!-- imgとformはflexで横並べ -->
+        <img src="images/{{ $my_img->images }}" class="bicImg formImg">
+        <!-- post_btnはformから分離できないからfloatで右寄せ -->
         {!! Form::open(array('url' => '/tweet', 'method' => 'post')) !!}
-
-        <!-- ここに画像を入れたい -->
         {{ Form::label('つぶやき') }}
         {{ Form::text('tweet',null,['class' => 'tweet', 'placeholder' => '何をつぶやこうか…？']) }}
         @if ($errors->has('tweet'))
         <h3>{{$errors->first('tweet')}}</h3>
         @endif
         <button type="submit" class="post_btn"><img src="images/post.png" alt="鉛筆"></button>
-
         {!! Form::close() !!}
     </div>
 
@@ -29,12 +29,14 @@
         @forelse($list as $list)
             <div class="wideBox1">
                 <div class="wrapBox1">
-                    <a href="/{{ $list->id }}/profile"><img src="images/{{ $list->images }}" alt="プロフィール画像" class="bicImg"></a>
+                    <!-- 画像指定がない場合はデフォルト画像を表示する -->
+                    <!-- issetの存在確認だけでは場合分けできない -->
+                    <a href="/{{ $list->user_id }}/profile"><img src="images/{{ $list->images }}" alt="プロフィール画像" class="bicImg"></a>
                     <p>{{ $list->username }}</p>
                     <p class="deployRight">{{ $list->create_at }}</p>
                 </div>
                 <div class="wrapBox2">
-                    <p>{{ $list->posts }}</p>
+                    <p class="font_large">{{ $list->posts }}</p>
                 </div>
             </div>
 

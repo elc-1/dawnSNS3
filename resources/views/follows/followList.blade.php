@@ -17,7 +17,7 @@
 
 <div id="mutterBox">
     @forelse($list as $list)
-    <div class="wrapperBox">
+    <div class="wideBox1">
         <div class="wrapBox1">
             <a href="/{{ $list->id }}/profile"><img src="images/{{ $list->images }}" alt="プロフィール画像" class="bicImg"></a>
             <p>{{ $list->username }}</p>

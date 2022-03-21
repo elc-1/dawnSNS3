@@ -30,7 +30,7 @@
   <div id="result">
       @forelse($result as $result)
         <div class="result_user">
-            <a href="/{{$result->id}}/profile"><img class="userImg result_img" src="images/{{ $result->images }}" alt="プロフィール画像"></a>
+            <a href="/{{$result->id}}/profile"><img class="bicImg" src="images/{{ $result->images }}" alt="プロフィール画像"></a>
             <p class="result_username">{{ $result->username }}</p>
 
             <!-- ボタンの切り替え -->
@@ -38,12 +38,12 @@
             <!-- 自分はフォローできないようにする -->
             @if(in_array($result->id,$check))
               <!-- フォロー外す -->
-              <p class="follow btn"><a href="/{{$result->id}}/unFollow">フォローをはずす</a></p>
+              <p class="btn unfollow"><a href="/{{$result->id}}/unFollow">フォローをはずす</a></p>
             @elseif($result->id == Auth::id())
               <!-- 自分はフォローできないように何も表示しない -->
             @else
               <!-- フォローボタン -->
-              <p class="unfollow btn"><a href="/{{$result->id}}/follow">フォローする</a></p>
+              <p class="btn follow"><a href="/{{$result->id}}/follow">フォローする</a></p>
             @endif
             <br>
         </div>

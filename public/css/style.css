@@ -19,6 +19,79 @@ body{
 }
 
 
+/* 共通パーツ */
+
+/* ボタン */
+.btn {
+  display: block;
+  font-size: 15px;
+  background: #3C4767;
+  border-radius: 5px;
+  width: 130px;
+  height: 40px;
+  text-align: center;
+  line-height: 40px;
+  color: #fff;
+}
+/* headerアイコン */
+.userImg{
+  border-radius: 50%;
+  width: 40px;
+}
+/* その他アイコン */
+.bicImg {
+  border-radius: 50%;
+  width: 50px;
+  margin: -10px 30px 0 0;
+}
+/* 改行無効化,文字カラー */
+p {
+  display: inline;
+  color: #6C6C6C;
+  font-size: 15px;
+}
+.font_large {
+  font-size: 18px;
+}
+.btn a{
+  color: #fff;
+}
+/* hrの灰色線 */
+.border {
+  height: 2px;
+  background-color: #EDEDED;
+  border: none;
+}
+.wideBox1 {
+  width: 90%;
+  margin: 3% 5%;
+}
+.wrapBox1 {
+  display: flex;
+  font-size: 15px;
+}
+.wrapBox2 {
+  margin: 0 0 0 80px;
+}
+.wideBox2 {
+  margin: 1% 0;
+  padding-left: 80%;
+}
+/* アップロード時刻の右寄せ */
+.deployRight {
+  margin-left: auto;
+}
+.modal-open {
+  margin-right: 20px;
+}
+/* エラー文改行無効化 */
+h3 {
+  display: inline;
+  color: #DE553D;
+}
+
+
+
 /* header */
 header{
   background:#3C4767;
@@ -48,7 +121,7 @@ header{
 }
 .username {
   color: #fff;
-  font: 15px;
+  font-size: 15px;
 }
 
 
@@ -156,7 +229,6 @@ header{
 
 /* ①index */
 
-
 /* ここからモーダル */
 /* 背景 */
 .overlay {
@@ -188,11 +260,28 @@ header{
   overflow: hidden;
 }
 #formTweet {
-  height: 100px;
+  display: flex;
+  height: 70px;
+  width: 70%;
+  margin: 20px 30px 0 30px;
 }
 .tweet {
-  width: 70%;
+  width: 800px;
   border: none;
+  font-size: 18px;
+  color: #D7D7D7;
+  opacity: 0.5;
+  outline: none;
+}
+.post_btn {
+  position: relative;
+  float: right;
+  border: none;
+  background: transparent;
+}
+.formImg {
+  height: 50px;
+  margin-top: 8px;
 }
 
 
@@ -202,66 +291,52 @@ header{
   background-color: #D7D7D7;
   border: none;
 }
-
 #search {
   /* これでtextboxと検索ワードを横並びにする */
   display: flex;
 }
-
 .search_form {
   width: 40%;
   margin: 2% 3% 1.5% 8%;
 }
-
 .input {
   width: 80%;
   height: 30px;
   margin-right: 5%;
 }
-
 .search_btn {
   background-color: #3C4767;
   border-radius: 4px;
   width: 30px;
   height: 30px;
 }
-
 .search_word {
   margin: 3% 0% 1.5% 17%;
 }
-
 .search_word p {
   color: #7E7E7E;
 }
-
 #result {
   margin: 0 20% 0 8%;
 }
-
 .result_user {
   display: flex;
   margin: 4% 0%;
 }
-
 .result_username {
   margin: 2% 3%;
   color: #7E7E7E;
 }
-
 .follow {
+  margin-left: auto;
+}
+.unfollow {
   background-color: #B95556;
   margin-left: auto;
 }
-
-.unfollow {
-  background-color: #7895D7;
-  margin-left: auto;
-}
-
 .result_img {
   width: 50px;
 }
-
 
 
 /* ③followList,followerList */
@@ -271,68 +346,4 @@ header{
 }
 .listHeader {
   font-size: 30px;
-}
-
-
-
-/* 共通パーツ */
-
-/* ボタン */
-.btn {
-  display: block;
-  font-size: 15px;
-  background: #3C4767;
-  border-radius: 5px;
-  width: 130px;
-  height: 40px;
-  text-align: center;
-  line-height: 40px;
-  color: #fff;
-}
-/* headerアイコン */
-.userImg{
-  border-radius: 50%;
-  width: 40px;
-}
-/* その他アイコン */
-.bicImg {
-  border-radius: 50%;
-  width: 50px;
-  margin: 10px;
-}
-/* 改行無効化,文字カラー */
-p {
-  display: inline;
-  color: #6C6C6C;
-}
-.btn a{
-  color: #fff;
-}
-/* hrの灰色線 */
-.border {
-  height: 2px;
-  background-color: #EDEDED;
-  border: none;
-}
-.wideBox1 {
-  width: 90%;
-  margin: 3% 5%;
-}
-.wrapBox1 {
-  display: flex;
-  font-size: 15px;
-}
-/* アップロード時刻の右寄せ */
-.deployRight {
-  margin-left: auto;
-}
-.wrapBox2 {
-  margin: 0 10%;
-}
-.wideBox2 {
-  margin: 1% 0;
-  padding-left: 80%;
-}
-.modal-open {
-  margin-right: 20px;
 }

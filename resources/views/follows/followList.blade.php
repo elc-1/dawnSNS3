@@ -6,7 +6,7 @@
     <p class="listHeader">FollowList</p>
     <div class="viewImg">
         @forelse($img as $img)
-            <a href="/{{ $img->id }}/profile"><img src="images/{{ $img->images }}" alt="プロフィール画像" class="bicImg"></a>
+            <a href="/{{ $img->id }}/profile"><img src="images/{{ $img->images }}" alt="プロフィール画像" class="bigImg"></a>
         @empty
             <p>フォローしている人はいません。</p>
         @endforelse
@@ -19,7 +19,7 @@
     @forelse($list as $list)
     <div class="wideBox1">
         <div class="wrapBox1">
-            <a href="/{{ $list->id }}/profile"><img src="images/{{ $list->images }}" alt="プロフィール画像" class="bicImg"></a>
+            <a href="/{{ $list->id }}/profile"><img src="images/{{ $list->images }}" alt="プロフィール画像" class="bigImg"></a>
             <p>{{ $list->username }}</p>
             <p class="deployRight">{{ $list->create_at }}</p>
         </div>

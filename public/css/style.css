@@ -39,7 +39,7 @@ body{
   width: 40px;
 }
 /* その他アイコン */
-.bicImg {
+.bigImg {
   border-radius: 50%;
   width: 50px;
   margin: -10px 30px 0 0;
@@ -245,11 +245,11 @@ header{
 .modal-window {
   display:none;
   position: fixed;
-  top: 50%;
+  top: 40%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 300px;
-  height: 300px;
+  width: 55%;
+  height: 25%;
   background-color: #fff;
   border-radius: 5px;
   padding: 2rem;
@@ -258,6 +258,19 @@ header{
 /* モーダル表示中は背景ページをスクロールさせない */
 .no_scroll {
   overflow: hidden;
+}
+.inner {
+  margin: 1% 3%;
+}
+.edit {
+  width: 100%;
+  height: 100px;
+}
+.edit_btn {
+  float: right;
+  border: none;
+  background: transparent;
+  margin: 3% 0;
 }
 #formTweet {
   display: flex;
@@ -274,7 +287,6 @@ header{
   outline: none;
 }
 .post_btn {
-  position: relative;
   float: right;
   border: none;
   background: transparent;
@@ -346,4 +358,57 @@ header{
 }
 .listHeader {
   font-size: 30px;
+}
+
+
+/* ④profile */
+.update {
+  background-color: #7B9979;
+  border: none;
+  margin-left: auto;
+}
+.wrap_form {
+  display: flex;
+  margin: 5% 15% 0 15%;
+}
+.profileImg {
+  height: 50px;
+}
+.profile_box2 {
+  margin-right: 10%;
+}
+.profile_tag {
+  display: inline-block;
+  font-size: 20px;
+  margin-bottom: 35%;
+}
+.adjust {
+  margin-top: 30%;
+}
+.profile_form {
+  width: 300px;
+  font-size: 25px;
+  color: #6C6C6C;
+  margin-bottom: 10%;
+  border: none;
+  border-bottom: 1px solid #707070;
+  background-color: #F2F2F2;
+  outline: none;
+}
+.bio {
+  height: 4em;
+  font-size: 20px;
+}
+.form_file {
+  font-size: 15px;
+  width: 350px;
+  height: 130px;
+  line-height: 130px;
+
+}
+.profile_box4 {
+
+}
+.btn_follow {
+  margin: 15% 0 0 65%;
 }

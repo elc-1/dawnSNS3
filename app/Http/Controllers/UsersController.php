@@ -22,6 +22,11 @@ class UsersController extends Controller
                 ->get();
         // dd($user);
 
+        $hash_pass = \DB::table('users')
+                ->where('id', Auth::id())
+                ->select('password')
+                ->first();
+
         //①username
         $username = Auth::user();
 
@@ -43,6 +48,7 @@ class UsersController extends Controller
             'username' => $username,
             'count_follow' => $count_follow,
             'count_follower' => $count_follower,
+            'hash_pass' => $hash_pass,
         ]);
     }
 
@@ -137,7 +143,10 @@ class UsersController extends Controller
         $username = $request->input('username');
         $mail = $request->input('mail');
         $bio = $request->input('bio');
-        // $icon_image = $request->input('icon_image');
+        $icon_image = $request->input('icon_image')->store('/public/images');
+
+        //画像ファイルの保存
+
 
         //new_passwordは入力がある時だけ取得するので、下のif文で取得する
 
@@ -156,7 +165,7 @@ class UsersController extends Controller
                     'mail' => $mail,
                     'password' => $new_password,
                     'bio' => $bio,
-                    // 'icon_image' => $icon_image,
+                    'images' => $icon_image,
                     'created_at' => now(),
                 ]);
 
@@ -171,7 +180,7 @@ class UsersController extends Controller
                     'username' => $username,
                     'mail' => $mail,
                     'bio' => $bio,
-                    // 'icon_image' => $icon_image,
+                    'images' => $icon_image,
                     'created_at' => now(),
                 ]);
 

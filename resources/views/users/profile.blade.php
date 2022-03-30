@@ -8,7 +8,8 @@
     <!-- $idが自分の場合 -->
     @if($user_id == $user->id)
 
-        <img src="images/dawn.png">
+        <img src="images/{{ $user->images }}">
+
         {!! Form::open(['url' => '/profile_update', 'method' => 'post']) !!}
         <div class="form-group">
             <tr>

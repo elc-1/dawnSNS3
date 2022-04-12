@@ -30,14 +30,12 @@
                 <div id="user">
                     <p class="username">{{ $username->username }}さん</p>
 
-                    <nav class="gnavi">
-                        <ul>
-                            <li><a href="/index">ホーム</a></li>
-                            <!-- auth認証のユーザーidがまだ入っていない -->
-                            <li><a href="/viewProfile">プロフィール</a></li>
-                            <li><a href="/logout">ログアウト</a></li>
-                        </ul>
-                    </nav>
+                    <ul class="gnavi">
+                        <li><a href="/index">HOME</a></li>
+                        <!-- auth認証のユーザーidがまだ入っていない -->
+                        <li><a href="/viewProfile">プロフィール編集</a></li>
+                        <li><a href="/logout">ログアウト</a></li>
+                    </ul>
 
                     <div class="menu-trigger">
                         <span></span>

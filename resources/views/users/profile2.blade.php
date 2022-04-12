@@ -31,35 +31,39 @@
 
                 <form action="/updateProfile" method="post" enctype="multipart/form-data">
 
-                    <p>{{ Form::text('username',$user->username,['class'=>'profile_form']) }}</p>
+                    {{ Form::text('username',$user->username,['class'=>'profile_form']) }}
                     @if($errors->has('username'))
                         {{ $errors->first('username') }}
                     @endif
                     <br>
 
-                    <p>{{ Form::text('mail',$user->mail,['class'=>'profile_form']) }}</p>
+                    {{ Form::text('mail',$user->mail,['class'=>'profile_form']) }}
                     @if($errors->has('mail'))
                         {{ $errors->first('mail') }}
                     @endif
                     <br>
 
                     <!-- 変更不可の表示のみのパスワードにする為、disabledを使用。値の送信も行わない。 -->
-                    <p>{{ Form::password('password',$user->password,['class'=>'profile_form','disabled']) }}</p>
+                    {{ Form::input('password','password',$user->password,['class'=>'profile_form','disabled']) }}
                     <br>
 
-                    <p>{{ Form::text('new_password','',['class'=>'profile_form']) }}</p>
+                    {{ Form::text('new_password','',['class'=>'profile_form']) }}
                     @if($errors->has('new_password'))
                         {{ $errors->first('new_password') }}
                     @endif
                     <br>
 
-                    <p>{{ Form::text('bio',$user->bio,['class'=>'profile_form bio']) }}</p>
+                    {{ Form::text('bio',$user->bio,['class'=>'profile_form bio']) }}
                     @if($errors->has('bio'))
                         {{ $errors->first('bio') }}
                     @endif
                     <br>
 
-                    <p>{{ Form::file('file',['class'=>'profile_form icon_image form_file']) }}</p>
+                    <input id="dummy_file" type="text" class="profile_form form_file">
+                    <label for="filename">
+                        <span class="browse_btn">ファイルを選択</span>
+                        <input type="file" size="16" id="filename">
+                    </label>
                     @if($errors->has('file'))
                         {{ $errors->first('file') }}
                     @endif
@@ -106,18 +110,19 @@
             @endif
         </div>
 
-        <hr class="separate">
+        @if($loop->first)
+            <hr class="separate">
+        @endif
 
         <div class="wideBox1">
             <div class="wrapBox1">
                 <!-- imageがnullならデフォルト画像を表示 -->
                 <!-- issetはnullが偽 -->
                 <!-- よくわからないアドレスが入ってるせいで判断がつかない -->
-                @if(isset($user->images)){
+                @if(isset($user->images))
                     <a href="/{{ $user->id }}/profile"><img src="images/{{ $user->images }}" alt="プロフィール画像" class="bigImg"></a>
-                }else{
+                @else
                     <a href="/{{ $user->id }}/profile"><img src="{{asset('/images/dawn.png')}}" alt="プロフィール画像" class="bigImg"></a>
-                }
                 @endif
                 <p>{{ $user->username }}</p>
                 <p class="deployRight">{{ $user->create_at }}</p>

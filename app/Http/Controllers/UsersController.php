@@ -12,182 +12,6 @@ use Illuminate\Support\Facades\Validator;
 
 class UsersController extends Controller
 {
-    /**
-     * プロフィール画面の表示
-     */
-    public function viewProfile()
-    {
-        $user = \DB::table('users')
-                ->where('id', Auth::id())
-                ->get();
-        // dd($user);
-
-        $hash_pass = \DB::table('users')
-                ->where('id', Auth::id())
-                ->select('password')
-                ->first();
-
-        //①username
-        $username = Auth::user();
-
-        //②フォローしている人のidの取得、カウント：int
-        $follow = \DB::table('follows')
-        ->where('follow_id',Auth::id())
-        ->get(['follower_id']);
-        $count_follow = count($follow);
-
-        //③フォローされている人のidの取得、カウント：int
-        $follower = \DB::table('follows')
-        ->where('follower_id',Auth::id())
-        ->get(['follow_id']);
-        $count_follower = count($follower);
-
-
-        return view('users.profile2',[
-            'user' => $user,
-            'username' => $username,
-            'count_follow' => $count_follow,
-            'count_follower' => $count_follower,
-            'hash_pass' => $hash_pass,
-        ]);
-    }
-
-
-    /**
-     * ログイン者以外のプロフィール
-     */
-    public function viewOtherProfile($id)
-    {
-        $user = \DB::table('users')
-                ->join('posts','users.id','=','posts.user_id')
-                ->where('users.id',$id)
-                ->select('users.id','users.username','users.mail','users.password','users.bio','users.images','posts.user_id','posts.posts','posts.create_at')
-                ->get();
-        // dd($user);
-        //①username
-        $username = Auth::user();
-
-        //②フォローしている人のidの取得、カウント：int
-        $follow = \DB::table('follows')
-        ->where('follow_id',Auth::id())
-        ->get(['follower_id']);
-        $count_follow = count($follow);
-
-        //③フォローされている人のidの取得、カウント：int
-        $follower = \DB::table('follows')
-        ->where('follower_id',Auth::id())
-        ->get(['follow_id']);
-        $count_follower = count($follower);
-
-        //⑨チェック用のfollowerを取り出す
-        $check1 = \DB::table('follows')
-                ->where('follow_id',Auth::id())
-                ->select('follower_id')
-                ->get()
-                ->toArray();
-        $check = array_column($check1,'follower_id');
-
-
-        return view('users.profile2',[
-            'user' => $user,
-            'username' => $username,
-            'count_follow' => $count_follow,
-            'count_follower' => $count_follower,
-            'check' => $check,
-        ]);
-    }
-
-
-
-    /**
-     * プロフィールの編集処理
-     */
-    public function updateProfile(Request $request)
-    {
-        //validationルール
-        $rules = [
-            'username' => 'required|min:4|max:12',
-            'mail' => 'required|email|min:4|max:20',
-            //新しいパスワードと古いパスワードの判別ができていない
-            'new_password' => 'nullable|min:4|max:12',
-            'bio' => 'max:200',
-        ];
-        //エラーメッセージ
-        $message = [
-            'username.min' => 'ユーザー名は4文字以上で入力してください。',
-            'username.max' => 'ユーザー名は12文字以内で入力してください。',
-            'username.required' => 'ユーザー名は入力必須です。',
-            'mail.min' => 'メールアドレスは４文字以上で入力してください。',
-            'mail.max' => 'メールアドレスは12文字以内で入力してください。',
-            'mail.required' => 'メールアドレスは入力必須です。',
-            'mail.email' => 'アドレス形式で入力してください。',
-            'new_password.min' => 'パスワードは４文字以上で入力してください。',
-            'new_password.max' => 'パスワードは12文字以内で入力してください。',
-            'bio.max' => '自己紹介文は200文字以内で入力してください。',
-        ];
-
-
-        //validatorを使用する
-        $validator = Validator::make($request->all(), $rules, $message);
-
-        //validationチェック
-        if ($validator->fails()) {
-            return redirect('/viewProfile')
-            ->withErrors($validator)
-            ->withInput();
-        }
-
-        //validatorを通過したら
-
-        //入力データの取得
-        $username = $request->input('username');
-        $mail = $request->input('mail');
-        $bio = $request->input('bio');
-        $icon_image = $request->input('icon_image')->store('/public/images');
-
-        //画像ファイルの保存
-
-
-        //new_passwordは入力がある時だけ取得するので、下のif文で取得する
-
-        //profileページに戻った時用に
-        //new_passwordがあるかないかをissetで判断して、ないならそのまま今のパスワードを再登録
-        //issetはnullでないのが真
-        //何も変更しなくてもこれだとupdate_atが更新されてしまう
-        if(isset($new_password))
-        {
-            //new_passwordがあった場合
-            $new_password = input('new_password');
-            \DB::table('users')
-                ->where('id', Auth::id())
-                ->update([
-                    'username' => $username,
-                    'mail' => $mail,
-                    'password' => $new_password,
-                    'bio' => $bio,
-                    'images' => $icon_image,
-                    'created_at' => now(),
-                ]);
-
-            return redirect('/viewProfile');
-
-        }else{
-            //new_passwordが無かった場合
-            //new_passwordは取得しない
-            \DB::table('users')
-                ->where('id', Auth::id())
-                ->update([
-                    'username' => $username,
-                    'mail' => $mail,
-                    'bio' => $bio,
-                    'images' => $icon_image,
-                    'created_at' => now(),
-                ]);
-
-            return redirect('/viewProfile');
-        };
-
-    }
 
     /**
      * 検索ページ
@@ -330,8 +154,173 @@ class UsersController extends Controller
         return redirect('/search');
     }
 
+    /**
+     * プロフィール画面の表示
+     */
+    public function viewProfile()
+    {
+        $user = \DB::table('users')
+                ->where('id', Auth::id())
+                ->get();
+        // dd($user);
+
+        $hash_pass = \DB::table('users')
+                ->where('id', Auth::id())
+                ->select('password')
+                ->first();
+
+        //①username
+        $username = Auth::user();
+
+        //②フォローしている人のidの取得、カウント：int
+        $follow = \DB::table('follows')
+        ->where('follow_id',Auth::id())
+        ->get(['follower_id']);
+        $count_follow = count($follow);
+
+        //③フォローされている人のidの取得、カウント：int
+        $follower = \DB::table('follows')
+        ->where('follower_id',Auth::id())
+        ->get(['follow_id']);
+        $count_follower = count($follower);
+
+        return view('users.profile2',[
+            'user' => $user,
+            'username' => $username,
+            'count_follow' => $count_follow,
+            'count_follower' => $count_follower,
+            'hash_pass' => $hash_pass,
+        ]);
+    }
+
 
     /**
-     *
+     * ログイン者以外のプロフィール
      */
+    public function viewOtherProfile($id)
+    {
+        $user = \DB::table('users')
+                ->join('posts','users.id','=','posts.user_id')
+                ->where('users.id',$id)
+                ->select('users.id','users.username','users.mail','users.password','users.bio','users.images','posts.user_id','posts.posts','posts.create_at')
+                ->get();
+        // dd($user);
+        //①username
+        $username = Auth::user();
+
+        //②フォローしている人のidの取得、カウント：int
+        $follow = \DB::table('follows')
+        ->where('follow_id',Auth::id())
+        ->get(['follower_id']);
+        $count_follow = count($follow);
+
+        //③フォローされている人のidの取得、カウント：int
+        $follower = \DB::table('follows')
+        ->where('follower_id',Auth::id())
+        ->get(['follow_id']);
+        $count_follower = count($follower);
+
+        //⑨チェック用のfollowerを取り出す
+        $check1 = \DB::table('follows')
+                ->where('follow_id',Auth::id())
+                ->select('follower_id')
+                ->get()
+                ->toArray();
+        $check = array_column($check1,'follower_id');
+
+
+
+
+        return view('users.profile2',[
+            'user' => $user,
+            'username' => $username,
+            'count_follow' => $count_follow,
+            'count_follower' => $count_follower,
+            'check' => $check,
+        ]);
+    }
+
+
+
+    /**
+     * プロフィールの編集処理
+     */
+    public function updateProfile(Request $request)
+    {
+        //validationルール
+        $rules = [
+            'username' => 'required|min:4|max:12',
+            'mail' => 'required|email|min:4|max:20',
+            //新しいパスワードと古いパスワードの判別ができていない
+            'new_password' => 'nullable|min:4|max:12',
+            'bio' => 'max:200',
+        ];
+        //エラーメッセージ
+        $message = [
+            'username.min' => 'ユーザー名は4文字以上で入力してください。',
+            'username.max' => 'ユーザー名は12文字以内で入力してください。',
+            'username.required' => 'ユーザー名は入力必須です。',
+            'mail.min' => 'メールアドレスは４文字以上で入力してください。',
+            'mail.max' => 'メールアドレスは12文字以内で入力してください。',
+            'mail.required' => 'メールアドレスは入力必須です。',
+            'mail.email' => 'アドレス形式で入力してください。',
+            'new_password.min' => 'パスワードは４文字以上で入力してください。',
+            'new_password.max' => 'パスワードは12文字以内で入力してください。',
+            'bio.max' => '自己紹介文は200文字以内で入力してください。',
+        ];
+
+
+        //validatorを使用する
+        $validator = Validator::make($request->all(), $rules, $message);
+
+        //validationチェック
+        if($validator->fails()) {
+            return redirect('/viewProfile')
+            ->withErrors($validator)
+            ->withInput();
+        }
+
+        //入力データの取得
+        $username = $request->input('username');
+        $mail = $request->input('mail');
+        $bio = $request->input('bio');
+
+        //new_passwordは入力がある時だけ取得するので、下のif文で取得する
+        //profileページに戻った時用に
+        //new_passwordがあるかないかをissetで判断して、ないならそのまま今のパスワードを再登録
+        //issetはnullでないのが真
+        //何も変更しなくてもこれだとupdate_atが更新されてしまう
+        if(isset($new_password))
+        {
+            //new_passwordがあった場合
+            $new_password = input('new_password');
+            \DB::table('users')
+                ->where('id', Auth::id())
+                ->update([
+                    'username' => $username,
+                    'mail' => $mail,
+                    'password' => $new_password,
+                    'bio' => $bio,
+                    'created_at' => now(),
+                ]);
+
+            return redirect('/viewProfile');
+
+        }else{
+            //new_passwordが無かった場合
+            //new_passwordは取得しない
+            \DB::table('users')
+                ->where('id', Auth::id())
+                ->update([
+                    'username' => $username,
+                    'mail' => $mail,
+                    'bio' => $bio,
+                    'created_at' => now(),
+                ]);
+
+            return redirect('/viewProfile');
+        };
+
+    }
+
 }

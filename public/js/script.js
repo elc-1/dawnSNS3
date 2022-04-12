@@ -38,3 +38,12 @@ $(function () {
     return false; //それ以降の処理は無効にする
   });
 });
+
+$(function () {
+  $('#filename').on("change", function () {
+    var file = this.files[0];
+    if (file != null) {
+      document.getElementById("dummy_file").value = file.name;
+    }
+  });
+});

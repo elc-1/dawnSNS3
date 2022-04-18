@@ -63,13 +63,14 @@ class PostsController extends Controller
         $user_id = Auth::id();
 
         //データの取得,自分かフォローしている人だけ
+        //distinctは重複削除
         $list = \DB::table('posts')
                 ->join('users','posts.user_id','=','users.id')
-                ->join('follows','posts.user_id','follows.follower_id')
-                ->select('users.username','users.images','posts.id','posts.user_id','posts.posts','posts.create_at')
+                ->join('follows','posts.user_id','=','follows.follower_id')
+                ->select('users.username','users.images','users.id','posts.id','posts.user_id','posts.posts','posts.create_at')
                 ->distinct()
-                ->where('follows.follow_id',Auth::id())
-                ->orWhere('users.id',Auth::id())
+                ->where('follows.follow_id', Auth::id())
+                ->orWhere('users.id', Auth::id())
                 ->orderBy('create_at','desc')
                 ->get();
 
@@ -88,6 +89,7 @@ class PostsController extends Controller
         $count_follower = count($follower);
 
         //ツイートフォームへの表示用画像の取得
+        // login.phpのユーザーアイコン用
         //コレクションで取得
         $my_img = \DB::table('users')
                   ->select('images')

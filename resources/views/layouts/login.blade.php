@@ -41,8 +41,8 @@
                         <span></span>
                         <span></span>
                     </div>
-                    <!-- ここまだユーザーの画像呼び出してない -->
-                    <img class="userImg" src="{{ asset('/images/dawn.png') }}">
+
+                    <img class="userImg" src="{{ asset('storage/'.$my_img->images) }}">
                 </div>
             </div>
         </div>

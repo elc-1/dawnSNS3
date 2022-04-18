@@ -10,7 +10,7 @@
     <!-- つぶやきフォーム -->
     <div id="formTweet">
         <!-- imgとformはflexで横並べ -->
-        <img src="images/{{ $my_img->images }}" class="bigImg formImg">
+        <img src="{{ asset('storage/'.$my_img->images) }}" class="bigImg formImg">
         <!-- post_btnはformから分離できないからfloatで右寄せ -->
         {!! Form::open(array('url' => '/tweet', 'method' => 'post')) !!}
         {{ Form::label('つぶやき') }}
@@ -31,7 +31,7 @@
                 <div class="wrapBox1">
                     <!-- 画像指定がない場合はデフォルト画像を表示する -->
                     <!-- issetの存在確認だけでは場合分けできない -->
-                    <a href="/{{ $list->user_id }}/profile"><img src="images/{{ $list->images }}" alt="プロフィール画像" class="bigImg"></a>
+                    <a href="/{{ $list->user_id }}/profile"><img src="{{ asset('storage/'.$list->images) }}" alt="プロフィール画像" class="bigImg"></a>
                     <p>{{ $list->username }}</p>
                     <p class="deployRight">{{ $list->create_at }}</p>
                 </div>

@@ -9,15 +9,16 @@ body {}
 #row {
   display: flex;
   flex-flow: row wrap;
+  width: 100%;
 }
 
 #container {
   flex: 0 0 80%;
+  border-right: 1px solid #6C6C6C;
 }
 
 #side-bar {
   flex: 0 0 19%;
-  border-left: 1px solid #6C6C6C;
 }
 
 
@@ -40,12 +41,14 @@ body {}
 .userImg {
   border-radius: 50%;
   width: 40px;
+  height: 40px;
 }
 
 /* その他アイコン */
 .bigImg {
   border-radius: 50%;
   width: 50px;
+  height: 50px;
   margin: -10px 30px 0 0;
 }
 
@@ -328,7 +331,7 @@ header {
 }
 
 .tweet {
-  width: 800px;
+  width: 700px;
   border: none;
   font-size: 18px;
   color: #D7D7D7;
@@ -344,6 +347,7 @@ header {
 
 .formImg {
   height: 50px;
+  width: 50px;
   margin-top: 8px;
 }
 
@@ -392,11 +396,11 @@ header {
 
 .result_user {
   display: flex;
-  margin: 4% 0%;
+  margin: 5% 0%;
 }
 
 .result_username {
-  margin: 2% 3%;
+  margin: 5px 3%;
   color: #7E7E7E;
 }
 
@@ -410,7 +414,7 @@ header {
 }
 
 .result_img {
-  width: 50px;
+  width: 80px;
 }
 
 
@@ -424,6 +428,14 @@ header {
   font-size: 30px;
 }
 
+.viewImg {
+  margin: 3% 5%;
+}
+
+.mrg_img {
+  margin: 8px;
+}
+
 
 /* ④profile */
 .update {
@@ -435,6 +447,7 @@ header {
 .wrap_form {
   display: flex;
   margin: 5% 15% 0 15%;
+  width: 20%;
 }
 
 .profileImg {
@@ -445,10 +458,16 @@ header {
   margin-right: 10%;
 }
 
+.profile_box4 {
+  width: 300px;
+  display: inline-block;
+  white-space: nowrap;
+}
+
 .profile_tag {
   display: inline-block;
   font-size: 20px;
-  margin-bottom: 35%;
+  margin-bottom: 50px;
 }
 
 .adjust {
@@ -480,7 +499,7 @@ header {
 }
 
 .btn_follow {
-  margin: 15% 0 0 65%;
+  margin: 30% 0 0 180%;
 }
 
 @media screen {

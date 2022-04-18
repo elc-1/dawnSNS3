@@ -49,14 +49,21 @@ class UsersController extends Controller
         $check = array_column($check1,'follower_id');
                 // dd($check);
 
+        // login.phpのユーザーアイコン用
+        //コレクションで取得
+        $my_img = \DB::table('users')
+                  ->select('images')
+                  ->where('id',Auth::id())
+                  ->first();
 
         return view('users.search',[
-            'username'=>$username,
-            'user_id'=>$user_id,
-            'count_follow'=>$count_follow,
-            'count_follower'=>$count_follower,
-            'result'=>$result,
-            'check'=>$check,
+            'username' => $username,
+            'user_id' => $user_id,
+            'count_follow' => $count_follow,
+            'count_follower' => $count_follower,
+            'result' => $result,
+            'check' => $check,
+            'my_img' => $my_img,
         ]);
 
     }
@@ -92,6 +99,13 @@ class UsersController extends Controller
                 ->toArray();
         $check = array_column($check1,'follower_id');
 
+        // login.phpのユーザーアイコン用
+        //コレクションで取得
+        $my_img = \DB::table('users')
+                  ->select('images')
+                  ->where('id',Auth::id())
+                  ->first();
+
 
         //入力ありの場合
         //issetはnullが偽
@@ -108,6 +122,7 @@ class UsersController extends Controller
                 'count_follow'=>$count_follow,
                 'count_follower'=>$count_follower,
                 'check'=>$check,
+                'my_img' => $my_img,
             ]);
         }
 
@@ -123,6 +138,7 @@ class UsersController extends Controller
             'count_follow'=>$count_follow,
             'count_follower'=>$count_follower,
             'check'=>$check,
+            'my_img' => $my_img,
         ]);
     }
 
@@ -184,12 +200,20 @@ class UsersController extends Controller
         ->get(['follow_id']);
         $count_follower = count($follower);
 
+        // login.phpのユーザーアイコン用
+        //コレクションで取得
+        $my_img = \DB::table('users')
+                  ->select('images')
+                  ->where('id',Auth::id())
+                  ->first();
+
         return view('users.profile2',[
             'user' => $user,
             'username' => $username,
             'count_follow' => $count_follow,
             'count_follower' => $count_follower,
             'hash_pass' => $hash_pass,
+            'my_img' => $my_img,
         ]);
     }
 
@@ -228,8 +252,12 @@ class UsersController extends Controller
                 ->toArray();
         $check = array_column($check1,'follower_id');
 
-
-
+        // login.phpのユーザーアイコン用
+        //コレクションで取得
+        $my_img = \DB::table('users')
+                  ->select('images')
+                  ->where('id',Auth::id())
+                  ->first();
 
         return view('users.profile2',[
             'user' => $user,
@@ -237,6 +265,7 @@ class UsersController extends Controller
             'count_follow' => $count_follow,
             'count_follower' => $count_follower,
             'check' => $check,
+            'my_img' => $my_img,
         ]);
     }
 
@@ -278,22 +307,46 @@ class UsersController extends Controller
             return redirect('/viewProfile')
             ->withErrors($validator)
             ->withInput();
-        }
+        };
+
 
         //入力データの取得
         $username = $request->input('username');
         $mail = $request->input('mail');
         $bio = $request->input('bio');
+        //これは存在確認のために取得
+        $prof_image = $request->file('prof_image');
+        $new_password = $request->input('new_password');
+        // dd($prof_image);
 
-        //new_passwordは入力がある時だけ取得するので、下のif文で取得する
-        //profileページに戻った時用に
+        //画像の更新があるのか確認する
+        if(isset($prof_image))
+        {
+            //画像入力があった場合
+            //imagesファイルに名前をそのまま保存する
+            $file_name = $prof_image->getClientOriginalName();
+            $prof_image->storeAs('', $file_name, 'public');
+            // dd($file_name);ok
+
+            // 更新処理
+            \DB::table('users')
+                ->where('id', Auth::id())
+                ->update([
+                    'images' => $file_name,
+                ]);
+        }else{
+            //画像の入力が無かった場合
+            //更新もいから何もしない
+        };
+
+
         //new_passwordがあるかないかをissetで判断して、ないならそのまま今のパスワードを再登録
         //issetはnullでないのが真
         //何も変更しなくてもこれだとupdate_atが更新されてしまう
         if(isset($new_password))
         {
             //new_passwordがあった場合
-            $new_password = input('new_password');
+            $new_password = $request->input('new_password');
             \DB::table('users')
                 ->where('id', Auth::id())
                 ->update([
@@ -301,7 +354,7 @@ class UsersController extends Controller
                     'mail' => $mail,
                     'password' => $new_password,
                     'bio' => $bio,
-                    'created_at' => now(),
+                    'modified_at' => now(),
                 ]);
 
             return redirect('/viewProfile');
@@ -315,7 +368,7 @@ class UsersController extends Controller
                     'username' => $username,
                     'mail' => $mail,
                     'bio' => $bio,
-                    'created_at' => now(),
+                    'modified_at' => now(),
                 ]);
 
             return redirect('/viewProfile');
@@ -323,4 +376,4 @@ class UsersController extends Controller
 
     }
 
-}
+};

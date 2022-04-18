@@ -47,12 +47,21 @@ class FollowsController extends Controller
                 ->where('follows.follow_id',Auth::id())
                 ->get();
 
+        //ツイートフォームへの表示用画像の取得
+        // login.phpのユーザーアイコン用
+        //コレクションで取得
+        $my_img = \DB::table('users')
+                  ->select('images')
+                  ->where('id',Auth::id())
+                  ->first();
+
         return view('follows.followList',[
             'list'=>$list,
             'username'=>$username,
             'count_follow'=>$count_follow,
             'count_follower'=>$count_follower,
             'img'=>$img,
+            'my_img' => $my_img,
         ]);
     }
 
@@ -94,12 +103,21 @@ class FollowsController extends Controller
                 ->get();
                 // dd($img);
 
+        //ツイートフォームへの表示用画像の取得
+        // login.phpのユーザーアイコン用
+        //コレクションで取得
+        $my_img = \DB::table('users')
+                  ->select('images')
+                  ->where('id',Auth::id())
+                  ->first();
+
         return view('follows.followerList',[
             'list'=>$list,
             'username'=>$username,
             'count_follow'=>$count_follow,
             'count_follower'=>$count_follower,
             'img'=>$img,
+            'my_img' => $my_img,
         ]);
     }
 

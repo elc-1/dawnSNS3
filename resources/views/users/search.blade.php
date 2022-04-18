@@ -30,7 +30,7 @@
   <div id="result">
       @forelse($result as $result)
         <div class="result_user">
-            <a href="/{{$result->id}}/profile"><img class="bigImg" src="images/{{ $result->images }}" alt="プロフィール画像"></a>
+            <a href="/{{$result->id}}/profile"><img class="bigImg" src="{{ asset('storage/'.$result->images) }}" alt="プロフィール画像"></a>
             <p class="result_username">{{ $result->username }}</p>
 
             <!-- ボタンの切り替え -->
@@ -50,6 +50,6 @@
       @empty
         <p>該当なし</p>
       @endforelse
-  </div>
+</div>
 
 @endsection

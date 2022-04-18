@@ -9,7 +9,7 @@
         <div class="wrap_form">
 
             <div class="profile_box1">
-                <img src="/images/{{ $user->images }}" class="bigImg profileImg">
+                <img src="{{ asset('storage/'.$my_img->images) }}" class="bigImg profileImg">
             </div>
 
             <div class="profile_box2">
@@ -29,7 +29,7 @@
 
             <div class="profile_box3">
 
-                <form action="/updateProfile" method="post" enctype="multipart/form-data">
+                {{ Form::open(['action' => 'UsersController@updateProfile', 'method' => 'post', 'files' => true]) }}
 
                     {{ Form::text('username',$user->username,['class'=>'profile_form']) }}
                     @if($errors->has('username'))
@@ -59,10 +59,10 @@
                     @endif
                     <br>
 
-                    <input id="dummy_file" type="text" class="profile_form form_file">
+                    <input id="dummy_file" type="text" class="profile_form form_file" name="prof_image">
                     <label for="filename">
                         <span class="browse_btn">ファイルを選択</span>
-                        <input type="file" size="16" id="filename">
+                        <input type="file" size="16" id="filename" name="prof_image">
                     </label>
                     @if($errors->has('file'))
                         {{ $errors->first('file') }}
@@ -70,7 +70,7 @@
 
                     <button type="submit" class="update btn">更新</button>
 
-                </form>
+                {{ Form::close() }}
             </div>
 
         </div>
@@ -82,7 +82,7 @@
         <div class="wrap_form">
             @if($loop->first)
                 <div class="profile_box1">
-                    <img src="/images/{{ $user->images }}" alt="プロフィール写真" class="bigImg profileImg">
+                    <img src="{{ asset('storage/'.$user->images) }}" alt="プロフィール写真" class="bigImg profileImg">
                 </div>
 
                 <div class="profile_box2">
@@ -91,9 +91,9 @@
                 </div>
 
                 <div class="profile_box4">
-                    <p>{{ $user->username }}</p>
+                    <p class="profile_tag">{{ $user->username }}</p>
                     <br>
-                    <p>{{ $user->bio }}</p>
+                    <p class="profile_tag">{{ $user->bio }}</p>
                 </div>
 
                 <div class="btn_follow">
@@ -120,9 +120,9 @@
                 <!-- issetはnullが偽 -->
                 <!-- よくわからないアドレスが入ってるせいで判断がつかない -->
                 @if(isset($user->images))
-                    <a href="/{{ $user->id }}/profile"><img src="images/{{ $user->images }}" alt="プロフィール画像" class="bigImg"></a>
+                    <a href="/{{ $user->id }}/profile"><img src="{{ asset('storage/'.$user->images) }}" alt="プロフィール画像" class="bigImg"></a>
                 @else
-                    <a href="/{{ $user->id }}/profile"><img src="{{asset('/images/dawn.png')}}" alt="プロフィール画像" class="bigImg"></a>
+                    <a href="/{{ $user->id }}/profile"><img src="{{asset('images/dawn.png')}}" alt="プロフィール画像" class="bigImg"></a>
                 @endif
                 <p>{{ $user->username }}</p>
                 <p class="deployRight">{{ $user->create_at }}</p>

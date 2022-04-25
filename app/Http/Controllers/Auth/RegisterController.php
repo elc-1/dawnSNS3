@@ -24,12 +24,7 @@ class RegisterController extends Controller
 
     use RegistersUsers;
 
-    /**
-     * Where to redirect users after registration.
-     * 登録が完了した後の表示
-     * @var string
-     */
-    protected $redirectTo = '/login';
+
 
     /**
      * Create a new controller instance.
@@ -43,16 +38,17 @@ class RegisterController extends Controller
 
     /**
      * Get a validator for an incoming registration request.
-     *
+     *  新規登録のバリデーション
      * @param  array  $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'username' => 'required|string|max:255',
-            'mail' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:4',
+            'username' => 'required|min:4|max:12',
+            'mail' => 'required|email|min:4|max:12|unique:users',
+            'password' => 'required|min:4|max:12',
+            'password-confirm' => 'required|min:4|max:12|same:password',
         ]);
     }
 
@@ -72,11 +68,21 @@ class RegisterController extends Controller
     }
 
     /**
-     * 新規登録完了画面
+     * 新規登録後の表示
+     */
+    public function redirectPath()
+    {
+        return route('added');
+    }
+
+    /**
+     * ルート用
      */
     public function added()
     {
         $user = Auth::user();
-        return view('auth.added',['user' => $user]);
+        return view('added', [
+            'user' => $user,
+        ]);
     }
 }

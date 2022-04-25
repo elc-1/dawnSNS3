@@ -352,7 +352,7 @@ class UsersController extends Controller
                 ->update([
                     'username' => $username,
                     'mail' => $mail,
-                    'password' => $new_password,
+                    'password' => bcrypt($new_password),
                     'bio' => $bio,
                     'modified_at' => now(),
                 ]);

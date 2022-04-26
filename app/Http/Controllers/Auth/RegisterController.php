@@ -72,7 +72,7 @@ class RegisterController extends Controller
      */
     public function redirectPath()
     {
-        return route('added');
+        return 'added';
     }
 
     /**
@@ -81,8 +81,19 @@ class RegisterController extends Controller
     public function added()
     {
         $user = Auth::user();
-        return view('added', [
+        return view('auth.added', [
             'user' => $user,
         ]);
     }
+
+    /**
+     * 無理やりだけど、新規登録後の遷移先変更は
+     * これでオーバーライドできているらしい
+     */
+    // public function register(Request $request)
+    // {
+    //     $this->validator($request->all())->validate();
+    //     event(new Registered($user = $this->create($request->all())));
+    //     return redirect(route('added'));
+    // }
 }

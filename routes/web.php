@@ -16,14 +16,8 @@ use App\Http\Controllers\Auth\AuthController;
 
 
 /*----------ログアウト中のページ----------*/
-// // //ログイン画面表示のみ
-// Route::get('/login', 'Auth\LoginController@viewLogin')->name('viewLogin');
-// //ログイン処理のみ
-// Route::post('/store', 'Auth\LoginController@exeLogin')->name('exeLogin');
 
-
-// //新規登録画面の表示、データ送信
-// Route::get('/register', 'Auth\RegisterController@viewRegister');
+Auth::routes();
 
 //新規登録完了画面、データの受け取り
 Route::get('/added', 'Auth\RegisterController@added')->name('added');
@@ -71,5 +65,3 @@ Route::post('/searching','UsersController@searching');
 
 //ログアウト処理
 Route::get('/logout','Auth\LoginController@logout');
-
-Auth::routes();

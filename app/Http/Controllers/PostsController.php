@@ -64,14 +64,14 @@ class PostsController extends Controller
 
         //データの取得,自分かフォローしている人だけ
         //distinctは重複削除
-        $list = \DB::table('posts')
-                ->join('users','posts.user_id','=','users.id')
-                ->join('follows','posts.user_id','=','follows.follower_id')
-                ->select('users.username','users.images','users.id','posts.id','posts.user_id','posts.posts','posts.create_at')
-                ->distinct()
+        $list = \DB::table('users')
+                ->join('posts','users.id','=','posts.user_id')
+                ->leftJoin('follows','users.id','=','follows.follower_id')
+                ->select('users.username','users.images','posts.user_id','posts.posts','posts.create_at','posts.id')
                 ->where('follows.follow_id', Auth::id())
-                ->orWhere('users.id', Auth::id())
+                ->orWhere('posts.user_id', Auth::id())
                 ->orderBy('create_at','desc')
+                ->distinct()
                 ->get();
 
                 // dd($list);

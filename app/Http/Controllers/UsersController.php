@@ -224,7 +224,7 @@ class UsersController extends Controller
     public function viewOtherProfile($id)
     {
         $user = \DB::table('users')
-                ->join('posts','users.id','=','posts.user_id')
+                ->leftJoin('posts','users.id','=','posts.user_id')
                 ->where('users.id',$id)
                 ->select('users.id','users.username','users.mail','users.password','users.bio','users.images','posts.user_id','posts.posts','posts.create_at')
                 ->get();

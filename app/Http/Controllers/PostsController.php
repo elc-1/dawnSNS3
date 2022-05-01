@@ -22,7 +22,7 @@ class PostsController extends Controller
 
         // バリデーションチェック
         $request->validate([
-            'tweet' => 'required|max:100',
+            'tweet' => 'required|max:150',
         ]);
 
         //Requestからデータの取得
@@ -30,9 +30,6 @@ class PostsController extends Controller
 
         //現在ログイン中のユーザーidを取得
         $id = Auth::id();
-        //一旦ランダムで
-        // $id = mt_rand(1, 11);
-
 
         //これがデータベースへの登録
         //左側にカラム名

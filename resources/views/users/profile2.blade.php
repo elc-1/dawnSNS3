@@ -99,12 +99,12 @@
                 <div class="btn_follow">
                     @if(in_array($user->id,$check))
                         <!-- フォロー外す -->
-                        <a href="/{{$user->id}}/unFollow"><p class="btn">フォローをはずす</p></a>
+                        <a href="/{{$user->id}}/unFollow"><p class="btn unfollow">フォローをはずす</p></a>
                     @elseif($user->id == Auth::id())
                         <!-- 自分はフォローできないように何も表示しない -->
                     @else
                         <!-- フォローボタン -->
-                        <a href="/{{$user->id}}/follow"><p class="btn">フォローする</p></a>
+                        <a href="/{{$user->id}}/follow"><p class="btn follow">フォローする</p></a>
                     @endif
                 </div>
             @endif

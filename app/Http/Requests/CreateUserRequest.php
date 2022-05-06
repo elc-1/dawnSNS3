@@ -6,6 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 
 
 // 新規ユーザー登録のバリデーションを行うクラス
+// 今回使用していない
 class CreateUserRequest extends FormRequest
 {
     /**

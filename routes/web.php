@@ -20,7 +20,7 @@ use App\Http\Controllers\Auth\AuthController;
 Auth::routes();
 
 //新規登録完了画面、データの受け取り
-Route::get('/added', 'Auth\RegisterController@added')->name('added');
+Route::get('/added', 'Auth\RegisterController@added');
 
 
 /*----------ログイン中のページ----------*/

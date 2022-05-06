@@ -22,9 +22,9 @@ class RegisterController extends Controller
     |
     */
 
+
+    //新規登録画面の表示
     use RegistersUsers;
-
-
 
     /**
      * Create a new controller instance.
@@ -39,7 +39,7 @@ class RegisterController extends Controller
     /**
      * Get a validator for an incoming registration request.
      *  新規登録のバリデーション
-     * @param  array  $data
+     * @param  array  $data 配列でデータを持ってきてる
      * @return \Illuminate\Contracts\Validation\Validator
      */
     protected function validator(array $data)
@@ -55,7 +55,7 @@ class RegisterController extends Controller
     /**
      * Create a new user instance after a valid registration.
      *
-     * @param  array  $data
+     * @param  array  $data 配列から各データを呼び出してUserに書き込み
      * @return \App\User
      */
     protected function create(array $data)
@@ -65,14 +65,6 @@ class RegisterController extends Controller
             'mail' => $data['mail'],
             'password' => bcrypt($data['password']),
         ]);
-    }
-
-    /**
-     * 新規登録後の表示
-     */
-    public function redirectPath()
-    {
-        return 'added';
     }
 
     /**

@@ -65,3 +65,5 @@ Route::post('/searching','UsersController@searching');
 
 //ログアウト処理
 Route::get('/logout','Auth\LoginController@logout');
+
+Route::get('/test','PostsController@test');

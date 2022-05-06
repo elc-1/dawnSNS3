@@ -83,13 +83,13 @@ class UsersController extends Controller
         $user_id = Auth::id();
         //⑥フォローしている人のidの取得、カウント：int
         $follow = \DB::table('follows')
-        ->where('follow_id',$user_id)
-        ->get(['follower_id']);
+                ->where('follow_id',$user_id)
+                ->get(['follower_id']);
         $count_follow = count($follow);
         //⑦フォローされている人のidの取得、カウント：int
         $follower = \DB::table('follows')
-        ->where('follower_id',$user_id)
-        ->get(['follow_id']);
+                ->where('follower_id',$user_id)
+                ->get(['follow_id']);
         $count_follower = count($follower);
         //⑨チェック用のfollowerを取り出す
         $check1 = \DB::table('follows')
@@ -153,7 +153,7 @@ class UsersController extends Controller
             'follower_id' => $id,
         ]);
 
-        return redirect('/search');
+        return back();
     }
 
     /**
@@ -167,7 +167,7 @@ class UsersController extends Controller
             ->where('follower_id',$id)
             ->delete();
 
-        return redirect('/search');
+        return back();
     }
 
     /**
@@ -317,7 +317,7 @@ class UsersController extends Controller
         //これは存在確認のために取得
         $prof_image = $request->file('prof_image');
         $new_password = $request->input('new_password');
-        // dd($prof_image);
+
 
         //画像の更新があるのか確認する
         if(isset($prof_image))

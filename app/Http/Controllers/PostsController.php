@@ -75,14 +75,14 @@ class PostsController extends Controller
 
         //⑥フォローしている人のidの取得、カウント：int
         $follow = \DB::table('follows')
-        ->where('follow_id',$user_id)
-        ->get(['follower_id']);
+                ->where('follow_id',$user_id)
+                ->get(['follower_id']);
         $count_follow = count($follow);
 
         //⑦フォローされている人のidの取得、カウント：int
         $follower = \DB::table('follows')
-        ->where('follower_id',$user_id)
-        ->get(['follow_id']);
+                ->where('follower_id',$user_id)
+                ->get(['follow_id']);
         $count_follower = count($follower);
 
         //ツイートフォームへの表示用画像の取得
@@ -128,7 +128,7 @@ class PostsController extends Controller
     {
         $post_id = $request->input('post_id');
         $up_post = $request->input('update');
-        // dd($up_post);
+
         \DB::table('posts')
             ->where('id', $post_id)
             ->update(
@@ -136,6 +136,18 @@ class PostsController extends Controller
             );
 
         return redirect('/index');
+    }
+
+    public function test()
+    {
+        $posts = \DB::table('posts')
+                ->where('user_id' , Auth::id())
+                ->select('posts')
+                ->get();
+
+        return view ('posts.test',[
+            'posts'=>$posts,
+        ]);
     }
 
 }

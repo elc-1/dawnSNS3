@@ -18,14 +18,14 @@ class FollowsController extends Controller
 
         //②フォローしている人のidの取得、カウント：int
         $follow = \DB::table('follows')
-        ->where('follow_id',Auth::id())
-        ->get(['follower_id']);
+            ->where('follow_id',Auth::id())
+            ->get(['follower_id']);
         $count_follow = count($follow);
 
         //③フォローされている人のidの取得、カウント：int
         $follower = \DB::table('follows')
-        ->where('follower_id',Auth::id())
-        ->get(['follow_id']);
+            ->where('follower_id',Auth::id())
+            ->get(['follow_id']);
         $count_follower = count($follower);
 
 
